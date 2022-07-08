@@ -14,9 +14,9 @@ const transporter = nodemailer.createTransport({
 
 const mailOptions = {
   from: 'richard.andre.herrera@gmail.com',
-  to: 'richardvillatoro@hotmail.com',
+  to: 'pasantiaciancoders@gmail.com',
   subject: 'testing',
-  text: 'Account successfully created!'
+  text: 'Correo de ejemplo'
 }
 
 transporter.sendMail(mailOptions, function (err, success) {

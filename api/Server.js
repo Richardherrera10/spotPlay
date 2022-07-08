@@ -7,8 +7,9 @@ import { userModule } from './users/index.js'
 import { artistModule } from './artist/index.js'
 import { genreModule } from './genre/index.js'
 import { albumModule } from './album/index.js'
-import { songPlaylistModule } from './song-playlist/index.js'
 import { authModule } from './auth/index.js'
+import { roleModule } from './role/index.js'
+import { songplaylistModule } from './songPlaylist/index.js'
 import cors from 'cors'
 import morgan from 'morgan'
 import swaggerUI from 'swagger-ui-express'
@@ -47,10 +48,11 @@ class Server {
     this._app.use('/api/v1/playlist', playlistModule())
     this._app.use('/api/v1/user', userModule(express.Router))
     this._app.use('/api/v1/artist', artistModule())
-    this._app.use('/api/v1/playlist/edit', songPlaylistModule())
+    this._app.use('/api/v1/songPlaylist/', songplaylistModule())
+    this._app.use('/api/v1/role/', roleModule())
     // recibe query string
     // this._app.use('/api/v1/search')
-    this._app.use('api/v1/auth', authModule(express.Router))
+    this._app.use('/api/v1/auth', authModule(express.Router))
     this._app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(this._swaggerFile))
   }
 

@@ -7,33 +7,33 @@ class ArtistRouter {
     this.registerRoutes()
   }
 
-  registerRoutes () {
-    this._router.get('/', this.handleGetArtist.bind(this))
-    this._router.post('/', this.handlePostArtist.bind(this))
-    this._router.delete('/', this.hanldeDeleteArtist.bind(this))
-    this._router.put('/', this.hanldeUpdateArtist.bind(this))
+  async registerRoutes () {
+    this._router.get('/', await this.handleGetArtist.bind(this))
+    this._router.post('/', await this.handlePostArtist.bind(this))
+    this._router.delete('/', await this.hanldeDeleteArtist.bind(this))
+    this._router.put('/', await this.hanldeUpdateArtist.bind(this))
   }
 
-  handleGetArtist (req, res) {
-    const result = this._ctrl.getAllArtist()
+  async handleGetArtist (req, res) {
+    const result = await this._ctrl.getAllArtist()
     this._response.success(req, res, result, this._httpCode.ok)
   }
 
-  handlePostArtist (req, res) {
+  async handlePostArtist (req, res) {
     const artist = req.body
-    const result = this._ctrl.createArtist(artist)
+    const result = await this._ctrl.createArtist(artist)
     this._response.success(req, res, result, this._httpCode.created)
   }
 
-  hanldeDeleteArtist (req, res) {
+  async hanldeDeleteArtist (req, res) {
     const artist = req.body
-    const result = this._ctrl.deleteArtist(artist)
+    const result = await this._ctrl.deleteArtist(artist)
     this._response.success(req, res, result, this._httpCode.created)
   }
 
-  hanldeUpdateArtist (req, res) {
+  async hanldeUpdateArtist (req, res) {
     const artist = req.body
-    const result = this._ctrl.updateArtist(artist)
+    const result = await this._ctrl.updateArtist(artist)
     this._response.success(req, res, result, this._httpCode.created)
   }
 }

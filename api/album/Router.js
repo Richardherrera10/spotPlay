@@ -7,33 +7,33 @@ class AlbumRouter {
     this.registerRoutes()
   }
 
-  registerRoutes () {
-    this._router.get('/', this.handleGetAlbum.bind(this))
-    this._router.post('/', this.handlePostAlbum.bind(this))
-    this._router.delete('/', this.hanldeDeleteAlbum.bind(this))
-    this._router.put('/', this.hanldeUpdateAlbum.bind(this))
+  async registerRoutes () {
+    this._router.get('/', await this.handleGetAlbum.bind(this))
+    this._router.post('/', await this.handlePostAlbum.bind(this))
+    this._router.delete('/', await this.hanldeDeleteAlbum.bind(this))
+    this._router.put('/', await this.hanldeUpdateAlbum.bind(this))
   }
 
-  handleGetAlbum (req, res) {
-    const result = this._ctrl.getAllAlbum()
+  async handleGetAlbum (req, res) {
+    const result = await this._ctrl.getAllAlbum()
     this._response.success(req, res, result, this._httpCode.ok)
   }
 
-  handlePostAlbum (req, res) {
+  async handlePostAlbum (req, res) {
     const album = req.body
-    const result = this._ctrl.createAlbum(album)
+    const result = await this._ctrl.createAlbum(album)
     this._response.success(req, res, result, this._httpCode.created)
   }
 
-  hanldeDeleteAlbum (req, res) {
+  async hanldeDeleteAlbum (req, res) {
     const album = req.body
-    const result = this._ctrl.deleteAlbum(album)
+    const result = await this._ctrl.deleteAlbum(album)
     this._response.success(req, res, result, this._httpCode.created)
   }
 
-  hanldeUpdateAlbum (req, res) {
+  async hanldeUpdateAlbum (req, res) {
     const album = req.body
-    const result = this._ctrl.updateAlbum(album)
+    const result = await this._ctrl.updateAlbum(album)
     this._response.success(req, res, result, this._httpCode.created)
   }
 }

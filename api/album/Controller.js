@@ -6,30 +6,30 @@ class AlbumController {
     this._entity = album
   }
 
-  getAllAlbum () {
-    const response = this._service.all('album')
+  async getAllAlbum () {
+    const response = await this._service.all('album')
     return response
   }
 
-  createAlbum (album) {
+  async createAlbum (album) {
     const newAlbum = new this._entity(album)
-    const response = this._service.save('album', newAlbum)
+    const response = await this._service.save('album', newAlbum)
     return response
   }
 
-  updateAlbum (album) {
+  async updateAlbum (album) {
     const updatedAlbum = new this._entity(album)
     updatedAlbum._id = album.id
     console.log('ctrl', updatedAlbum)
-    const response = this._service.update('album', updatedAlbum)
+    const response = await this._service.update('album', updatedAlbum._id, updatedAlbum)
     return response
   }
 
-  deleteAlbum (album) {
+  async deleteAlbum (album) {
     const albumToDelete = new this._entity(album)
     albumToDelete._id = album.id
     console.log('ctrl', albumToDelete)
-    const response = this._service.delete('album', albumToDelete)
+    const response = await this._service.delete('album', albumToDelete)
     return response
   }
 }

@@ -7,14 +7,14 @@ export default class AuthRoute {
     this.registerRoutes()
   }
 
-  registerRoutes () {
+  async registerRoutes () {
     // middleware para que se encargue de verificar los datos
-    this._router.post('/signin', this.handleSignIn.bind(this))
+    this._router.post('/signin', await this.handleSignIn.bind(this))
   }
 
-  handleSignIn (req, res) {
+  async handleSignIn (req, res) {
     try {
-      const result = this._controller.authenticationUser(req.body)
+      const result = await this._controller.authenticationUser(req.body)
       if (result._auth) {
         this._response.success(req, res, result, this._httpCode.OK)
       } else {

@@ -7,52 +7,31 @@ class PlaylistController {
     this._entitySongPl = songPlaylist
   }
 
-  getAllPlaylist () {
-    const response = this._service.all('playlist')
+  async getAllPlaylist () {
+    const response = await this._service.all('playlist')
     return response
   }
 
-  createNewPlaylist (playlist) {
+  async createNewPlaylist (playlist) {
     console.log('ctrl playlist dada', playlist)
     const newPlaylist = new this._entity(playlist)
     console.log('entidad playlist', newPlaylist)
-    const response = this._service.save('playlist', newPlaylist)
+    const response = await this._service.save('playlist', newPlaylist)
     return response
   }
 
-  updatePlaylist (playlist) {
+  async updatePlaylist (playlist) {
     const updatedPlaylist = new this._entity(playlist)
     updatedPlaylist._id = playlist.id
     console.log('ctrl', updatedPlaylist)
-    const response = this._service.update('playlist', updatedPlaylist)
+    const response = await this._service.update('playlist', updatedPlaylist._id, updatedPlaylist)
     return response
   }
 
-  deletePlaylist (playlist) {
+  async deletePlaylist (playlist) {
     const playlistToDelete = new this._entity(playlist)
     playlistToDelete._id = playlist.id
-    console.log('ctrl', playlistToDelete)
-    const response = this._service.delete('playlist', playlistToDelete)
-    return response
-  }
-
-  createNewSongPlaylist (songPlaylist) {
-    console.log('ctrl dato dado', songPlaylist)
-    const newSongPlaylist = new this._entitySongPl(songPlaylist)
-    newSongPlaylist._idPlaylist = songPlaylist.idPlaylist
-    newSongPlaylist._idSong = songPlaylist.idSong
-    console.log('entidad', newSongPlaylist)
-    const response = this._service.save('songPlaylist', newSongPlaylist)
-    return response
-  }
-
-  deleteSongPlaylist (songPlaylist) {
-    console.log('ctrl dato dado', songPlaylist)
-    const newSongPlaylist = new this._entitySongPl(songPlaylist)
-    newSongPlaylist._idPlaylist = songPlaylist.idPlaylist
-    newSongPlaylist._idSong = songPlaylist.idSong
-    console.log('entidad', newSongPlaylist)
-    const response = this._service.delete('songPlaylist', newSongPlaylist)
+    const response = await this._service.delete('playlist', playlistToDelete)
     return response
   }
 }

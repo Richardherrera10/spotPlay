@@ -19,5 +19,8 @@ export const config = {
   nodemailer: {
     email: process.env.EMAIL,
     password: process.env.PASSWORD
+  },
+  dbmongo: {
+    uri: process.env.MONGO_URI || 'mongodb://localhost:2701/app'
   }
 }

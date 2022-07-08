@@ -28,7 +28,6 @@ class UserRouter {
     const user = req.body
     const result = await this._ctrl.createUser(user)
     this._response.success(req, res, result, this._httpCode.created)
-    console.log('result de sign up', result)
   }
 
   async handleDeleteUser (req, res) {

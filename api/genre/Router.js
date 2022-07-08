@@ -7,33 +7,33 @@ class GenreRouter {
     this.registerRoutes()
   }
 
-  registerRoutes () {
-    this._router.get('/', this.handleGetGenre.bind(this))
-    this._router.post('/', this.handlePostGenre.bind(this))
-    this._router.delete('/', this.hanldeDeleteGenre.bind(this))
-    this._router.put('/', this.hanldeUpdateGenre.bind(this))
+  async registerRoutes () {
+    this._router.get('/', await this.handleGetGenre.bind(this))
+    this._router.post('/', await this.handlePostGenre.bind(this))
+    this._router.delete('/', await this.hanldeDeleteGenre.bind(this))
+    this._router.put('/', await this.hanldeUpdateGenre.bind(this))
   }
 
-  handleGetGenre (req, res) {
-    const result = this._ctrl.getAllGenre()
+  async handleGetGenre (req, res) {
+    const result = await this._ctrl.getAllGenre()
     this._response.success(req, res, result, this._httpCode.ok)
   }
 
-  handlePostGenre (req, res) {
+  async handlePostGenre (req, res) {
     const genre = req.body
-    const result = this._ctrl.createGenre(genre)
+    const result = await this._ctrl.createGenre(genre)
     this._response.success(req, res, result, this._httpCode.created)
   }
 
-  hanldeDeleteGenre (req, res) {
+  async hanldeDeleteGenre (req, res) {
     const genre = req.body
-    const result = this._ctrl.deleteGenre(genre)
+    const result = await this._ctrl.deleteGenre(genre)
     this._response.success(req, res, result, this._httpCode.created)
   }
 
-  hanldeUpdateGenre (req, res) {
+  async hanldeUpdateGenre (req, res) {
     const genre = req.body
-    const result = this._ctrl.updateGenre(genre)
+    const result = await this._ctrl.updateGenre(genre)
     this._response.success(req, res, result, this._httpCode.created)
   }
 }

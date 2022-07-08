@@ -23,8 +23,37 @@ tags:
   description: Song genre
 - name: Album
   description: Albums from artists
+- name: SongPlaylist
+  description: manage songs within a playlist
+- name: Auth
+  description: Authenticate user when they login
 components:
+  ## securitySchemes:
+   ## bearerAuth:
+   ##   type: http
+     ##  scheme: bearer
+     ## bearerFormat: JWT
   schemas:
+    hide: true
+    Auth:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    SongPlaylist:
+      type: object
+      properties:
+        idPlaylist:
+          type: string
+        idSong:
+          type: string
+    SongPlaylistDelete:
+      type: object
+      properties:
+        id:
+          type: string
     Song:
       type: object
       properties:
@@ -37,7 +66,7 @@ components:
           type: string
         duration:
           type: string
-        imagen: 
+        image: 
           type: string
         idAlbum:
           type: integer
@@ -57,7 +86,7 @@ components:
           type: string
         duration:
           type: string
-        imagen: 
+        image: 
           type: string
         idAlbum:
           type: integer
@@ -86,6 +115,16 @@ components:
           type: string
         password:
           type: string
+        role:
+          type: string
+    UserAuth:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        
     UserPost:
       type: object
       properties:
@@ -94,6 +133,13 @@ components:
         email:
           type: string
         password:
+          type: string
+        role:
+          type: string
+    UserDelete: 
+      type: object
+      properties:
+        id: 
           type: string
     Playlist:
       type: object
@@ -206,15 +252,45 @@ components:
           type: integer
           format: int64
 paths:
+  /auth/signin:
+    post:
+      tags:
+      - Auth
+      summary: Authenticate user when they login and give a token for current session
+      operantionId: authenticationUser
+      description: Authenticate user login
+      requestBody:
+        description: write username and password
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAuth'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UserAuth'
+        required: true
+      responses:
+        200:
+          description: registro exitoso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAuth'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description: not found
+          content: {}
   /user/signup:
     post:
       tags:
       - User
       summary: Create user
       operantionId: createUser
-      description: New user is created
+      description: New user is created, sends Welcome message to the user email. 
       requestBody:
-        description: ingrese los datos del usuario a crear.
+        description: ingrese los datos del usuario a crear, si es usuario lector Role:lector
         content:
           application/json:
             schema:
@@ -267,10 +343,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserDelete'
           application/xml:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserDelete'
         required: true
       responses:
         200:
@@ -318,11 +394,11 @@ paths:
     post:
       tags:
       - Song
-      summary: Crear una cancion
+      summary: Create single song
       operantionId: createSong
       description: Se creara una nueva cancion.
       requestBody:
-        description: ingrese los datos de la cancion a crear.
+        description: Write song information. Requires user log in. 
         content:
           application/json:
             schema:
@@ -347,9 +423,9 @@ paths:
     get:
       tags:
       - Song
-      summary: Ver todas las canciones
+      summary: See all songs
       operantionId: getAllSongs
-      description: Ver canciones.
+      description: Get all Songs. Requires user log in.
       responses:
         200:
           description: registro exitoso!
@@ -843,6 +919,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Artist'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description: not found
+          content: {}
+  /songPlaylist/addSong/:
+    post:
+      tags:
+      - SongPlaylist
+      summary: Add a song to a playlist
+      operantionId: createSongPlaylist
+      description: create new song to a playlist
+      requestBody:
+        description: Write idplaylist and idSong to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SongPlaylist'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/SongPlaylist'
+        required: true
+      responses:
+        200:
+          description: registro exitoso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SongPlaylist'
+        400:
+          description: bad request
+          content: {}
+        404:
+          description: not found
+          content: {}
+  /songPlaylist/deleteSong/:
+    delete:
+      tags:
+      - SongPlaylist
+      summary: Delete a song from playlist
+      operantionId: deleteSongPlaylist
+      description: Delete a song from a playlist
+      requestBody:
+        description: write id of idSong and idPlaylist to delete
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SongPlaylistDelete'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/SongPlaylistDelete'
+        required: true
+      responses:
+        200:
+          description: registro exitoso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SongPlaylistDelete'
         400:
           description: bad request
           content: {}
